@@ -5,6 +5,7 @@ Pascal triangle
 
 
 def pascal_triangle(n):
+    """returns the pascal triangle"""
     base = [[1], [1, 1]]
 
     if n <= 0:
