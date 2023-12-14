@@ -2,11 +2,14 @@
 """Min operation to print n of H"""
 
 
-def minOperations(n, curr=2, topast=1, op=2):
+def minOperations(n):
     """Min Operation"""
     if n <= 1:
         return 0
-    if curr >= n:
-        return op
-    return min(minOperations(n, curr + curr, curr, op + 2),
-               minOperations(n, curr + topast, topast, op + 1))
+    dp = [0] * (n + 1)
+    dp[1] = 1
+    for i in range(2, n+1):
+        min_copy_past = dp[i // 2] + 2
+        min_past_prev = dp[i - 1] + 1
+        dp[i] = min(min_copy_past, min_past_prev)
+    return dp[n]
