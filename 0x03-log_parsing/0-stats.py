@@ -2,6 +2,26 @@
 """Log parsing"""
 import sys
 
+
+def parse_line(line):
+    try:
+        parts = line.split()
+        ip_address = parts[0]
+        status_code = int(parts[-2])
+        file_size = int(parts[-1])
+        return ip_address, status_code, file_size
+    except (ValueError, IndexError):
+        return None, None, None
+
+
+def print_metrics(total_file_size, status_code_counts):
+    print("File size:", total_file_size)
+    for code in sorted(status_code_counts):
+        count = status_code_counts[code]
+        if count > 0:
+            print(f"{code}: {count}")
+
+
 total_file_size = 0
 status_code_counts = {
     200: 0,
@@ -19,21 +39,14 @@ line_count = 0
 try:
     for line in sys.stdin:
         line_count += 1
-        try:
-            ip, _, date, _, status_code, file_size = line.split(maxsplit=5)
-            file_size = int(file_size)
-        except ValueError:
-            continue
+        ip_address, status_code, file_size = parse_line(line)
+        if ip_address is not None:
+            total_file_size += file_size
+            status_code_counts[status_code] += 1
+            line_count += 1
 
-        total_file_size += file_size
-        status_code_counts[int(status_code)] += 1
-
-        if line_count % 10 == 0 or line_count == 1:
-            print("File size:", total_file_size)
-            for code in sorted(status_code_counts):
-                count = status_code_counts[code]
-                if count > 0:
-                    print(f"{code}: {count}")
+        if line_count % 10 == 0:
+            print_metrics(total_file_size, status_code_counts)
 
 except KeyboardInterrupt:
-    pass
+    print_metrics(total_file_size, status_code_counts)
