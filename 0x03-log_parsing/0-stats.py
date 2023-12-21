@@ -48,6 +48,5 @@ try:
 
         if line_count % 10 == 0:
             print_metrics(total_file_size, status_code_counts)
-            line_count = 0
 finally:
     print_metrics(total_file_size, status_code_counts)
