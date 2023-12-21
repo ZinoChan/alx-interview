@@ -15,7 +15,7 @@ def parse_line(line):
 
 
 def print_metrics(total_file_size, status_code_counts):
-    print("File size:", total_file_size)
+    print("File size: {}".format(total_file_size))
     for code in sorted(status_code_counts):
         count = status_code_counts[code]
         if count > 0:
@@ -38,7 +38,6 @@ line_count = 0
 
 try:
     for line in sys.stdin:
-        line_count += 1
         ip_address, status_code, file_size = parse_line(line)
         if ip_address is not None:
             total_file_size += file_size
