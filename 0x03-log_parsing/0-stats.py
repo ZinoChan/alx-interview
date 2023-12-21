@@ -48,5 +48,5 @@ try:
 
         if line_count % 10 == 0:
             print_metrics(total_file_size, status_code_counts)
-finally:
+except KeyboardInterrupt:
     print_metrics(total_file_size, status_code_counts)
