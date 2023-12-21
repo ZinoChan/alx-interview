@@ -21,7 +21,7 @@ def print_metrics(total_file_size, status_code_counts):
     for code in sorted(status_code_counts):
         count = status_code_counts[code]
         if count > 0:
-            print(f"{code}: {count}")
+            print('{}: {}'.format(code, count))
 
 
 total_file_size = 0
