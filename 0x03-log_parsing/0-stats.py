@@ -4,6 +4,7 @@ import sys
 
 
 def parse_line(line):
+    """parse line for correct format"""
     try:
         parts = line.split()
         ip_address = parts[0]
@@ -15,6 +16,7 @@ def parse_line(line):
 
 
 def print_metrics(total_file_size, status_code_counts):
+    """Print the metrics"""
     print("File size: {}".format(total_file_size))
     for code in sorted(status_code_counts):
         count = status_code_counts[code]
