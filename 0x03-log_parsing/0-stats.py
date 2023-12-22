@@ -40,11 +40,11 @@ line_count = 0
 
 try:
     for line in sys.stdin:
+        line_count += 1
         ip_address, status_code, file_size = parse_line(line)
         if ip_address is not None:
             total_file_size += file_size
             status_code_counts[status_code] += 1
-            line_count += 1
 
         if line_count % 10 == 0:
             print_metrics(total_file_size, status_code_counts)
