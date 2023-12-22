@@ -45,7 +45,6 @@ try:
         if ip_address is not None:
             total_file_size += file_size
             status_code_counts[status_code] += 1
-            
 
         if line_count % 10 == 0:
             print_metrics(total_file_size, status_code_counts)
