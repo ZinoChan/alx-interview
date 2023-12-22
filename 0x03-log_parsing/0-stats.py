@@ -3,27 +3,6 @@
 import sys
 
 
-def parse_line(line):
-    """parse line for correct format"""
-    try:
-        parts = line.split()
-        ip_address = parts[0]
-        status_code = int(parts[-2])
-        file_size = int(parts[-1])
-        return ip_address, status_code, file_size
-    except Exception as err:
-        return None, None, None
-
-
-def print_metrics(total_file_size, status_code_counts):
-    """Print the metrics"""
-    print("File size: {}".format(total_file_size))
-    for code in sorted(status_code_counts):
-        count = status_code_counts[code]
-        if count > 0:
-            print('{}: {}'.format(code, count))
-
-
 total_file_size = 0
 status_code_counts = {
     200: 0,
@@ -38,16 +17,35 @@ status_code_counts = {
 
 line_count = 0
 
+
+def print_metrics(total_file_size, status_code_counts):
+    """Print the metrics"""
+    print("File size: {}".format(total_file_size))
+    for code in sorted(status_code_counts):
+        count = status_code_counts[code]
+        if count > 0:
+            print('{}: {}'.format(code, count))
+
+
 try:
     for line in sys.stdin:
         line_count += 1
-        ip_address, status_code, file_size = parse_line(line)
-        if ip_address is not None:
-            total_file_size += file_size
+        parts = line.split()
+
+        try:
+            status_code = parts[-2]
             status_code_counts[status_code] += 1
+        except Exception:
+            pass
+
+        try:
+            total_file_size += int(parts[-1])
+        except Exception:
+            pass
 
         if line_count % 10 == 0:
             print_metrics(total_file_size, status_code_counts)
+
 except Exception as err:
     pass
 finally:
