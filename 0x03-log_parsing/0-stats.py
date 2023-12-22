@@ -3,17 +3,6 @@
 import sys
 
 
-def parse_line(line):
-    """parse line for correct format"""
-    try:
-        parts = line.split()
-        status_code = int(parts[-2])
-        file_size = int(parts[-1])
-        return status_code, file_size
-    except Exception as err:
-        return None, None
-
-
 def print_metrics(total_file_size, status_code_counts):
     """Print the metrics"""
     print("File size: {}".format(total_file_size))
@@ -40,10 +29,18 @@ line_count = 0
 try:
     for line in sys.stdin:
         line_count += 1
-        status_code, file_size = parse_line(line)
-        if status_code is not None:
-            total_file_size += file_size
+        parts = line.split()
+        try:
+            status_code = int(parts[-2])
             status_code_counts[status_code] += 1
+        except Exception as err:
+            pass
+
+        try:
+            file_size = int(parts[-1])
+            total_file_size += file_size
+        except Exception as err:
+            pass
 
         if line_count % 10 == 0:
             print_metrics(total_file_size, status_code_counts)
