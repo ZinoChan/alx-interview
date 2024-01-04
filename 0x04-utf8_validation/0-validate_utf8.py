@@ -4,8 +4,8 @@
 
 def validUTF8(data):
     """Validate utf8"""
-    def rest(i):
-        """rest func"""
+    def validate_sequence(i):
+        """Validate sequence"""
         if len(data) < i:
             return False
         for _ in range(i):
@@ -13,19 +13,19 @@ def validUTF8(data):
                 return False
         return True
 
-    data = [str(bin(seq)[2:].zfill(8)) for seq in data[::-1]]
+    data = [format(seq, '08b') for seq in reversed(data)]
     while data:
         seq = data.pop()
         if seq.startswith("0"):
             continue
         if seq.startswith("110"):
-            if not rest(1):
+            if not validate_sequence(1):
                 return False
         elif seq.startswith("1110"):
-            if not rest(2):
+            if not validate_sequence(2):
                 return False
         elif seq.startswith("11110"):
-            if not rest(3):
+            if not validate_sequence(3):
                 return False
         else:
             return False
