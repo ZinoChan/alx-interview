@@ -2,17 +2,31 @@
 """UTF-8 validation function"""
 
 
-def transformToByte(num, num_bytes=2, byte_order='big'):
-    return num.to_bytes(num_bytes, byteorder=byte_order)
-
-
 def validUTF8(data):
     """Validate utf8"""
-    for num in data:
-        byte_repr = transformToByte(num)
-        if byte_repr[0] == 0:
-            pass
+    def rest(i):
+        """rest func"""
+        if len(data) < i:
+            return False
+        for _ in range(i):
+            if not data.pop().startswith("10"):
+                return False
+        return True
+
+    data = [str(bin(seq)[2:].zfill(8)) for seq in data[::-1]]
+    while data:
+        seq = data.pop()
+        if seq.startswith("0"):
+            continue
+        if seq.startswith("110"):
+            if not rest(1):
+                return False
+        elif seq.startswith("1110"):
+            if not rest(2):
+                return False
+        elif seq.startswith("11110"):
+            if not rest(3):
+                return False
         else:
             return False
-
     return True
