@@ -1,3 +1,6 @@
+#!/usr/bin/python3
+"""UTF-8 validation function"""
+
 def validUTF8(data):
     """validate utf8"""
     def is_continuation(byte):
