@@ -1,29 +1,30 @@
 #!/usr/bin/python3
-'''N-Queens Challenge'''
+"""N-Queens Challenge"""
 
 import sys
 
 
 def is_safe(placed_queens, row, col):
     for cord in placed_queens:
-        if cord[1] == col or cord[1] + (row - cord[0]) == col or cord[1] - (row - cord[0]) == col:
+        if (
+            cord[1] == col
+            or cord[1] + (row - cord[0]) == col
+            or cord[1] - (row - cord[0]) == col
+        ):
             return False
     return True
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     if len(sys.argv) != 2:
-        print("Usage: nqueens N")
         sys.exit(1)
 
     try:
         n = int(sys.argv[1])
     except ValueError:
-        print('N must be a number')
         exit(1)
 
     if n < 4:
-        print('N must be at least 4')
         exit(1)
 
     solutions = []
@@ -81,6 +82,6 @@ if __name__ == '__main__':
 
     for idx, val in enumerate(solutions):
         if idx == len(solutions) - 1:
-            print(val, end='')
+            print(val, end="")
         else:
             print(val)
