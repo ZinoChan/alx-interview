@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""N-Queens Challenge"""
+'''N-Queens Challenge'''
 
 import sys
 
@@ -15,7 +15,7 @@ def is_safe(placed_queens, row, col):
     return True
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     if len(sys.argv) != 2:
         sys.exit(1)
 
@@ -82,6 +82,6 @@ if __name__ == "__main__":
 
     for idx, val in enumerate(solutions):
         if idx == len(solutions) - 1:
-            print(val, end="")
+            print(val, end='')
         else:
             print(val)
