@@ -30,7 +30,7 @@ const printCharacters = async () => {
   try {
     const id = process.argv[2];
     const charactersUrls = await fetchFilm(id);
-    
+
     const characterNames = await Promise.all(charactersUrls.map(fetchCharacter));
 
     characterNames.forEach(name => console.log(name));
