@@ -2,16 +2,26 @@
 """Making change"""
 
 
-def makeChange(coins, total):
+def make_change(coins, total):
+    """Making change
+    """
     if total <= 0:
         return 0
 
-    dp = [float('inf')] * (total + 1)
-    dp[0] = 0
+    remaining_amount = total
+    coins_count = 0
+    coin_idx = 0
+    sorted_coins = sorted(coins, reverse=True)
+    num_coins = len(coins)
 
-    for i in range(1, total + 1):
-        for coin in coins:
-            if i >= coin:
-                dp[i] = min(dp[i], dp[i - coin] + 1)
+    while remaining_amount > 0:
+        if coin_idx >= num_coins:
+            return -1
 
-    return dp[total] if dp[total] != float('inf') else -1
+        if remaining_amount >= sorted_coins[coin_idx]:
+            remaining_amount -= sorted_coins[coin_idx]
+            coins_count += 1
+        else:
+            coin_idx += 1
+
+    return coins_count
