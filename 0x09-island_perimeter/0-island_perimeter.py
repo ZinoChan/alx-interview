@@ -1,7 +1,7 @@
 from typing import List
 
 
-def islandPerimeter(grid: List[List[int]]) -> int:
+def island_perimeter(grid: List[List[int]]) -> int:
     row, column = len(grid), len(grid[0])
     perimeter = 0
     for i in range(row):
