@@ -4,6 +4,7 @@ from typing import List
 
 
 def island_perimeter(grid: List[List[int]]) -> int:
+    """ define island_perimeter """
     row, column = len(grid), len(grid[0])
     perimeter = 0
     for i in range(row):
