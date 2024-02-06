@@ -1,9 +1,8 @@
 #!/usr/bin/python3
 """ Island perimeter """
-from typing import List
 
 
-def island_perimeter(grid: List[List[int]]) -> int:
+def island_perimeter(grid):
     """ define island_perimeter """
     row, column = len(grid), len(grid[0])
     perimeter = 0
